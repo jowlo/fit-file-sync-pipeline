@@ -72,9 +72,9 @@ def process_fits(config: AppConfig) -> dict[str, int]:
                 for line in output_lines[-5:]:
                     logger.info(f"  | {line}")
 
-            # Check for rate limiting
+            # Check for rate limiting (429) or Garmin temporary rejection (403 after successful uploads)
             is_rate_limited = bool(re.search(
-                r"429|rate limit|All login strategies exhausted", output, re.IGNORECASE
+                r"429|rate limit|All login strategies exhausted|API Error 403", output, re.IGNORECASE
             ))
             if is_rate_limited:
                 rate_limited = True

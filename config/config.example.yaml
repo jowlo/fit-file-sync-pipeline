@@ -11,11 +11,11 @@ sync:
   delay_between_files_ms: 100  # Delay between API calls (rate limiting)
   dry_run: false             # Set to true to test without uploading
   # sources:                 # Only sync from specific devices/platforms (optional)
-  #   - WAHOO                # Wahoo (ELEMNT, RIVAL, etc.)
-  #   - HAMMERHEAD           # Hammerhead Karoo
-  #   - COROS                # Coros watches
-  #   - POLAR                # Polar devices
-  #   - SUUNTO              # Suunto devices
+  #   - OAUTH_CLIENT         # Devices connected via OAuth (e.g. Hammerhead Karoo)
+  #   - GARMIN_CONNECT       # Activities already from Garmin
+  #   - WAHOO                # Wahoo direct upload
+  #   - ZWIFT                # Zwift activities
+  #   - STRAVA               # Strava import
 
 fit_file_faker:
   # Garmin Connect credentials (used by fit-file-faker for uploads)
