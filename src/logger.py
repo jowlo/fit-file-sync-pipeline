@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-def setup_logging(log_dir: Path) -> logging.Logger:
+def setup_logging(log_dir: Path, verbose: bool = False) -> logging.Logger:
     """Configure logging to both stdout and daily rotating file."""
     log_dir.mkdir(parents=True, exist_ok=True)
 
@@ -17,7 +17,7 @@ def setup_logging(log_dir: Path) -> logging.Logger:
 
     # Console handler (stdout for docker logs)
     console = logging.StreamHandler(sys.stdout)
-    console.setLevel(logging.INFO)
+    console.setLevel(logging.DEBUG if verbose else logging.INFO)
     console.setFormatter(formatter)
     logger.addHandler(console)
 

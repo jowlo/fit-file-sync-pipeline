@@ -88,6 +88,7 @@ def main():
     parser = argparse.ArgumentParser(description="FIT File Sync Pipeline")
     parser.add_argument("--run-once", action="store_true", help="Run a single sync cycle and exit")
     parser.add_argument("--dry-run", action="store_true", help="Skip actual uploads")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Show debug output on console")
     parser.add_argument("--config", type=Path, default=Path("/app/config/config.yaml"), help="Path to config file")
     args = parser.parse_args()
 
@@ -110,7 +111,7 @@ def main():
         sys.exit(1)
 
     # Setup logging (dirs guaranteed to exist now)
-    logger = setup_logging(config.log_dir)
+    logger = setup_logging(config.log_dir, verbose=args.verbose)
 
     # Generate fit-file-faker config
     setup_fit_file_faker(config)

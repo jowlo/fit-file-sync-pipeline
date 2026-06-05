@@ -62,6 +62,16 @@ def process_fits(config: AppConfig) -> dict[str, int]:
 
             output = result.stdout + "\n" + result.stderr
 
+            # Log full output at debug level, and abbreviated at info level
+            logger.debug(f"  fit-file-faker stdout: {result.stdout.strip()}")
+            logger.debug(f"  fit-file-faker stderr: {result.stderr.strip()}")
+            logger.info(f"  Exit code: {result.returncode}")
+            if result.returncode != 0:
+                # Show last few lines of output on non-zero exit
+                output_lines = output.strip().splitlines()
+                for line in output_lines[-5:]:
+                    logger.info(f"  | {line}")
+
             # Check for rate limiting
             is_rate_limited = bool(re.search(
                 r"429|rate limit|All login strategies exhausted", output, re.IGNORECASE
@@ -82,6 +92,8 @@ def process_fits(config: AppConfig) -> dict[str, int]:
                 r"Uploading.*using garth|Uploading.*to Garmin Connect|Successfully uploaded|Upload complete",
                 output, re.IGNORECASE
             )) or is_duplicate
+
+            logger.debug(f"  Detection: rate_limited={is_rate_limited}, duplicate={is_duplicate}, upload_success={upload_success}")
 
             # Check for genuine errors (narrow patterns only)
             has_exception = bool(re.search(r"Login failed|No profiles configured", output, re.IGNORECASE))
