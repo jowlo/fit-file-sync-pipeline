@@ -89,9 +89,16 @@ def process_fits(config: AppConfig) -> dict[str, int]:
 
             # Check for upload success
             upload_success = bool(re.search(
-                r"Uploading.*using garth|Uploading.*to Garmin Connect|Successfully uploaded|Upload complete",
+                r"Successfully uploaded|Upload complete",
                 output, re.IGNORECASE
             )) or is_duplicate
+
+            # "Uploading..." alone is NOT success - it's logged before the attempt
+            # Only count it if exit code is 0
+            if result.returncode == 0 and bool(re.search(
+                r"Uploading.*to Garmin Connect", output, re.IGNORECASE
+            )):
+                upload_success = True
 
             logger.debug(f"  Detection: rate_limited={is_rate_limited}, duplicate={is_duplicate}, upload_success={upload_success}")
 
