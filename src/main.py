@@ -23,8 +23,16 @@ def handle_signal(signum, frame):
 
 
 def setup_fit_file_faker(config: AppConfig) -> None:
-    """Generate fit-file-faker config from our config into state dir."""
+    """Generate fit-file-faker config from our config into state dir.
+    
+    Skips if a config already exists (e.g. from interactive --config-menu).
+    """
     fff_config_dir = config.state_dir / ".config" / "FitFileFaker"
+    config_file = fff_config_dir / ".config.json"
+
+    if config_file.exists():
+        return
+
     fff_config_dir.mkdir(parents=True, exist_ok=True)
 
     fff_config = {
@@ -44,7 +52,6 @@ def setup_fit_file_faker(config: AppConfig) -> None:
         "default_profile": "default",
     }
 
-    config_file = fff_config_dir / ".config.json"
     config_file.write_text(json.dumps(fff_config, indent=2))
 
 

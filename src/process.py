@@ -88,16 +88,12 @@ def process_fits(config: AppConfig) -> dict[str, int]:
             ))
 
             # Check for upload success
-            upload_success = bool(re.search(
-                r"Successfully uploaded|Upload complete",
-                output, re.IGNORECASE
-            )) or is_duplicate
+            # Only match actual log output lines, not source code in tracebacks
+            # Successful upload produces a line starting with log prefix containing the success message
+            upload_success = is_duplicate
 
-            # "Uploading..." alone is NOT success - it's logged before the attempt
-            # Only count it if exit code is 0
-            if result.returncode == 0 and bool(re.search(
-                r"Uploading.*to Garmin Connect", output, re.IGNORECASE
-            )):
+            if result.returncode == 0:
+                # Exit code 0 means fit-file-faker completed successfully
                 upload_success = True
 
             logger.debug(f"  Detection: rate_limited={is_rate_limited}, duplicate={is_duplicate}, upload_success={upload_success}")
