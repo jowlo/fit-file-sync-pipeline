@@ -10,6 +10,12 @@ sync:
   lookback_days: 7           # How many days back to check on each sync
   delay_between_files_ms: 100  # Delay between API calls (rate limiting)
   dry_run: false             # Set to true to test without uploading
+  # sources:                 # Only sync from specific devices/platforms (optional)
+  #   - WAHOO                # Wahoo (ELEMNT, RIVAL, etc.)
+  #   - HAMMERHEAD           # Hammerhead Karoo
+  #   - COROS                # Coros watches
+  #   - POLAR                # Polar devices
+  #   - SUUNTO              # Suunto devices
 
 fit_file_faker:
   # Garmin Connect credentials (used by fit-file-faker for uploads)

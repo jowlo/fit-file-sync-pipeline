@@ -62,6 +62,15 @@ def download_fits(config: AppConfig, oldest_date: str | None = None, newest_date
     activities_with_files = [a for a in activities if a.get("file_type")]
     logger.info(f"Activities with files: {len(activities_with_files)}")
 
+    # Filter by source if configured
+    if config.sync.sources:
+        before_count = len(activities_with_files)
+        activities_with_files = [
+            a for a in activities_with_files
+            if (a.get("source") or "").upper() in config.sync.sources
+        ]
+        logger.info(f"After source filter ({', '.join(config.sync.sources)}): {len(activities_with_files)}/{before_count}")
+
     activities_without_files = [a for a in activities if not a.get("file_type")]
     if activities_without_files:
         missing_ids = [a["id"] for a in activities_without_files]

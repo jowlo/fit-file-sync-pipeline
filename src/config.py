@@ -19,6 +19,7 @@ class SyncConfig:
     lookback_days: int = 7
     delay_between_files_ms: int = 100
     dry_run: bool = False
+    sources: list[str] | None = None  # Filter by source, e.g. ["WAHOO", "HAMMERHEAD"]
 
 
 @dataclass
@@ -83,6 +84,9 @@ def load_config(config_path: Path) -> AppConfig:
     config.sync.lookback_days = sync_raw.get("lookback_days", 7)
     config.sync.delay_between_files_ms = sync_raw.get("delay_between_files_ms", 100)
     config.sync.dry_run = sync_raw.get("dry_run", False)
+    sources = sync_raw.get("sources", None)
+    if sources:
+        config.sync.sources = [s.upper() for s in sources]
 
     # Fit-File-Faker config
     fff_raw = raw.get("fit_file_faker", {})
