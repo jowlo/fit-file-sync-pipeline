@@ -9,6 +9,7 @@ import threading
 from pathlib import Path
 
 from .config import load_config, validate_config, AppConfig
+from .dedup import deduplicate_intervals
 from .download import download_fits
 from .logger import setup_logging
 from .process import process_fits
@@ -84,10 +85,15 @@ def run_sync_cycle(config: AppConfig, logger) -> None:
     logger.info("Step 2: Processing and uploading to Garmin")
     counts = process_fits(config)
 
+    # Step 3: Deduplicate on intervals.icu
+    logger.info("Step 3: Removing duplicates on intervals.icu")
+    deduped = deduplicate_intervals(config)
+
     logger.info(
         f"=== Sync Cycle Complete === "
         f"(downloaded: {downloaded}, uploaded: {counts['success']}, "
-        f"duplicates: {counts['duplicates']}, errors: {counts['errors']})"
+        f"duplicates: {counts['duplicates']}, errors: {counts['errors']}, "
+        f"deduped: {deduped})"
     )
 
 
