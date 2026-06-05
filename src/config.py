@@ -23,9 +23,10 @@ class SyncConfig:
 
 @dataclass
 class DeviceConfig:
-    manufacturer: str = "garmin"
-    product: str = "edge1030"
-    serial_number: str = "3982691993"
+    manufacturer: int = 1  # 1 = Garmin
+    device: int = 3121  # 3121 = Edge 1030
+    serial_number: int | str = 3982691993
+    software_version: int | None = None
 
 
 @dataclass
@@ -92,9 +93,10 @@ def load_config(config_path: Path) -> AppConfig:
         os.environ.get("GARMIN_PASSWORD") or fff_raw.get("garmin_password", "")
     )
     device_raw = fff_raw.get("device", {})
-    config.fit_file_faker.device.manufacturer = device_raw.get("manufacturer", "garmin")
-    config.fit_file_faker.device.product = device_raw.get("product", "edge1030")
-    config.fit_file_faker.device.serial_number = device_raw.get("serial_number", "3982691993")
+    config.fit_file_faker.device.manufacturer = device_raw.get("manufacturer", 1)
+    config.fit_file_faker.device.device = device_raw.get("device", 3121)
+    config.fit_file_faker.device.serial_number = device_raw.get("serial_number", 3982691993)
+    config.fit_file_faker.device.software_version = device_raw.get("software_version", None)
 
     # Paths (allow override via env)
     config.data_dir = Path(os.environ.get("DATA_DIR", "/app/data"))

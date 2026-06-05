@@ -24,21 +24,27 @@ def handle_signal(signum, frame):
 
 def setup_fit_file_faker(config: AppConfig) -> None:
     """Generate fit-file-faker config from our config into state dir."""
-    fff_config_dir = config.state_dir / ".fit_file_faker"
+    fff_config_dir = config.state_dir / ".config" / "FitFileFaker"
     fff_config_dir.mkdir(parents=True, exist_ok=True)
 
     fff_config = {
-        "garmin_username": config.fit_file_faker.garmin_username,
-        "garmin_password": config.fit_file_faker.garmin_password,
-        "fit_files_dir": str(config.download_dir),
-        "device_info": {
-            "manufacturer": config.fit_file_faker.device.manufacturer,
-            "product": config.fit_file_faker.device.product,
-            "serial_number": config.fit_file_faker.device.serial_number,
-        },
+        "profiles": [
+            {
+                "name": "default",
+                "app_type": "custom",
+                "garmin_username": config.fit_file_faker.garmin_username,
+                "garmin_password": config.fit_file_faker.garmin_password,
+                "fitfiles_path": str(config.download_dir),
+                "manufacturer": config.fit_file_faker.device.manufacturer,
+                "device": config.fit_file_faker.device.device,
+                "serial_number": config.fit_file_faker.device.serial_number,
+                "software_version": config.fit_file_faker.device.software_version,
+            }
+        ],
+        "default_profile": "default",
     }
 
-    config_file = fff_config_dir / "config.json"
+    config_file = fff_config_dir / ".config.json"
     config_file.write_text(json.dumps(fff_config, indent=2))
 
 

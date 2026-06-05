@@ -17,11 +17,17 @@ fit_file_faker:
   garmin_password: "your_garmin_password"
 
   # Device to emulate in Garmin Connect
-  # Choose based on your primary activity type:
-  #   Cycling: edge1040, edge1030, edge840, edge530
-  #   Running: forerunner965, forerunner955, forerunner265
-  #   Multisport: fenix8, fenix7, epix2
+  # Use numeric IDs from Garmin's FIT SDK.
+  # Common devices:
+  #   Edge 1030: device 3121    Edge 1040: device 3122
+  #   Edge 840:  device 4061    Edge 530:  device 3121
+  #   Forerunner 965: device 4312   Fenix 7: device 3906
+  # manufacturer 1 = Garmin (always use 1)
+  # serial_number should be your real Garmin device's Unit ID for full
+  # Garmin Connect integration (Training Status, badges, etc.)
+  # Find it: Device → Settings → About → Unit ID
   device:
-    manufacturer: "garmin"
-    product: "edge1030"
-    serial_number: "3982691993"
+    manufacturer: 1
+    device: 3121
+    serial_number: 3982691993
+    # software_version: null  # Optional, e.g. 2922 = v29.22

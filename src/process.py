@@ -79,15 +79,19 @@ def process_fits(config: AppConfig) -> dict[str, int]:
 
             # Check for upload success
             upload_success = bool(re.search(
-                r"Uploading.*using garth|Uploading.*to Garmin Connect|Successfully uploaded",
+                r"Uploading.*using garth|Uploading.*to Garmin Connect|Successfully uploaded|Upload complete",
                 output, re.IGNORECASE
             )) or is_duplicate
 
             # Check for genuine errors (narrow patterns only)
-            has_exception = bool(re.search(r"Login failed", output, re.IGNORECASE))
+            has_exception = bool(re.search(r"Login failed|No profiles configured", output, re.IGNORECASE))
 
             if has_exception and not upload_success:
-                raise RuntimeError("Fit-File-Faker encountered an error")
+                raise RuntimeError(f"Fit-File-Faker error: {output.strip()[-200:]}")
+
+            # If no success indicator and no duplicate, treat as error
+            if not upload_success and not is_duplicate:
+                raise RuntimeError(f"No upload confirmation in output: {output.strip()[-200:]}")
 
             # Move to processed
             new_name = f"{fit_file.stem}.uploaded{fit_file.suffix}"
