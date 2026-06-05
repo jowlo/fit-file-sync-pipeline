@@ -1,17 +1,10 @@
-﻿# Configuration with secrets
-scripts/config.ps1
+# Configuration with secrets
+config/config.yaml
 
-# Data files
+# Runtime data
 data/
 logs/
-
-# Windows
-Thumbs.db
-desktop.ini
-*.lnk
-
-# PowerShell
-*.ps1~
+state/
 
 # Temporary files
 *.tmp
@@ -27,7 +20,7 @@ desktop.ini
 .vscode/
 .idea/
 
-# Python (if you add any Python tools later)
+# Python
 __pycache__/
 *.pyc
 *.pyo
@@ -35,3 +28,4 @@ __pycache__/
 .Python
 env/
 venv/
+.egg-info/

@@ -1,0 +1,27 @@
+# FIT File Sync Pipeline Configuration
+# Copy this file to config.yaml and fill in your settings.
+
+intervals:
+  # Get your API key from https://intervals.icu/settings
+  api_key: "YOUR_INTERVALS_API_KEY"
+
+sync:
+  interval_minutes: 60       # How often to check for new activities
+  lookback_days: 7           # How many days back to check on each sync
+  delay_between_files_ms: 100  # Delay between API calls (rate limiting)
+  dry_run: false             # Set to true to test without uploading
+
+fit_file_faker:
+  # Garmin Connect credentials (used by fit-file-faker for uploads)
+  garmin_username: "your_garmin_email@example.com"
+  garmin_password: "your_garmin_password"
+
+  # Device to emulate in Garmin Connect
+  # Choose based on your primary activity type:
+  #   Cycling: edge1040, edge1030, edge840, edge530
+  #   Running: forerunner965, forerunner955, forerunner265
+  #   Multisport: fenix8, fenix7, epix2
+  device:
+    manufacturer: "garmin"
+    product: "edge1030"
+    serial_number: "3982691993"

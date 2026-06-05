@@ -1,0 +1,10 @@
+services:
+  sync:
+    build: .
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - ./config:/app/config:ro
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./state:/app/state
+    restart: unless-stopped
