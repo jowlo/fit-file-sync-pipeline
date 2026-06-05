@@ -54,7 +54,7 @@ intervals.icu → Download → Fit-File-Faker → Garmin Connect
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/nothingshocking/fit-file-sync-pipeline.git
+git clone https://github.com/jowlo/fit-file-sync-pipeline.git
 cd fit-file-sync-pipeline
 
 # 2. Create your configuration
@@ -222,6 +222,7 @@ MIT License - see [LICENSE](LICENSE)
 
 ## Acknowledgments
 
+- **[Original project](https://github.com/nothingshocking/fit-file-sync-pipeline)** by [@nothingshocking](https://github.com/nothingshocking) - The original Windows/PowerShell pipeline this fork is based on
 - **[Fit-File-Faker](https://github.com/jat255/Fit-File-Faker)** by [@jat255](https://github.com/jat255) - The essential tool that enables device-agnostic uploads to Garmin Connect
 - **[intervals.icu](https://intervals.icu)** by [@david](https://intervals.icu) - Excellent API and training platform
 - The endurance sports open-source community
@@ -232,4 +233,4 @@ This tool is for personal use. Ensure you comply with the terms of service for i
 
 ---
 
-**Questions?** Open an [issue](https://github.com/nothingshocking/fit-file-sync-pipeline/issues)
+**Questions?** Open an [issue](https://github.com/jowlo/fit-file-sync-pipeline/issues)
